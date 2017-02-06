@@ -1,0 +1,25 @@
+{
+  "name": "contented",
+  "version": "0.0.1",
+  "description": "Content Delivery",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ilmc/contented.git"
+  },
+  "keywords": [
+    "content"
+  ],
+  "author": "Ian Moss",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ilmc/contented/issues"
+  },
+  "homepage": "https://github.com/ilmc/contented",
+  "dependencies": {
+    "express": "^4.14.1"
+  }
+}
