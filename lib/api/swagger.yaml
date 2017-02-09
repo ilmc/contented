@@ -1,0 +1,131 @@
+---
+swagger: "2.0"
+info:
+  version: "0.1.0"
+  title: "contented"
+host: "localhost:3000"
+basePath: "/"
+tags:
+- name: "Hello"
+  description: "World Example"
+- name: "Content"
+  description: "Content Mediator"
+schemes:
+- "http"
+- "https"
+consumes:
+- "application/json"
+produces:
+- "application/json"
+paths:
+  /content:
+    get:
+      tags:
+      - "Content"
+      description: "Returns 'Hello' to the caller"
+      operationId: "retrieve"
+      parameters:
+      - name: "name"
+        in: "query"
+        description: "The name of the person to whom to say hello"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/contentSchema"
+        default:
+          description: "Error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      x-swagger-router-controller: "Content"
+    put:
+      tags:
+      - "Content"
+      description: "Put me a json content package"
+      operationId: "create"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "a valid json file"
+        required: true
+        schema:
+          $ref: "#/definitions/contentSchema"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/HelloWorldResponse"
+        default:
+          description: "Error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      x-swagger-router-controller: "Content"
+    x-swagger-router-controller: "content"
+  /hello:
+    get:
+      tags:
+      - "Hello"
+      description: "Returns 'Hello' to the caller"
+      operationId: "hello"
+      parameters:
+      - name: "name"
+        in: "query"
+        description: "The name of the person to whom to say hello"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/HelloWorldResponse"
+        default:
+          description: "Error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      x-swagger-router-controller: "Hello"
+    x-swagger-router-controller: "hello_world"
+  /swagger:
+    x-swagger-pipe: "swagger_raw"
+definitions:
+  HelloWorldResponse:
+    required:
+    - "message"
+    properties:
+      message:
+        type: "string"
+  ErrorResponse:
+    required:
+    - "message"
+    properties:
+      message:
+        type: "string"
+  childContentSchema:
+    required:
+    - "id"
+    properties:
+      id:
+        type: "string"
+        default: "child1"
+      name:
+        type: "string"
+        default: "This is my first Child"
+      children:
+        type: "array"
+        items:
+          $ref: "#/definitions/contentSchema"
+  contentSchema:
+    required:
+    - "id"
+    properties:
+      id:
+        type: "string"
+        default: "package1"
+      name:
+        type: "string"
+        default: "This is my Package"
+      children:
+        type: "array"
+        items:
+          $ref: "#/definitions/childContentSchema"
